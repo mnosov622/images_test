@@ -75,13 +75,49 @@ const Home = () => {
       ) : (
         <>
           <div className="sort">
-            <label htmlFor="sortBy">Sort by:</label>
-            <select id="sortBy" value={sortBy} onChange={handleSortChange}>
-              <option value="category">Category</option>
-              <option value="date">Date</option>
-              <option value="name">Name</option>
-              <option value="size">Size</option>
-            </select>
+            <label>Sort by:</label>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="sortBy"
+                  value="category"
+                  checked={sortBy === "category"}
+                  onChange={handleSortChange}
+                />
+                Category
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="sortBy"
+                  value="date"
+                  checked={sortBy === "date"}
+                  onChange={handleSortChange}
+                />
+                Date
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="sortBy"
+                  value="name"
+                  checked={sortBy === "name"}
+                  onChange={handleSortChange}
+                />
+                Name
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="sortBy"
+                  value="size"
+                  checked={sortBy === "size"}
+                  onChange={handleSortChange}
+                />
+                Size
+              </label>
+            </div>
           </div>
           {sortBy === "category" ? (
             <div className="categories">

@@ -15,7 +15,14 @@ const Card = ({ item, onClose, isClosed }) => {
       <div className="card-details">
         <p>Category: {item.category}</p>
         <p>Filesize: {item.filesize} bytes</p>
-        <p>Timestamp: {new Date(item.timestamp).toLocaleDateString()}</p>
+        <p>
+          Timestamp:{" "}
+          {new Date(item.timestamp).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
       </div>
     </div>
   );

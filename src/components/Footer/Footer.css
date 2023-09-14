@@ -1,0 +1,14 @@
+/* Add these styles to your Footer.css or a separate CSS file */
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 16px;
+  z-index: 100;
+}

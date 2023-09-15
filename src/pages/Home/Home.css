@@ -8,6 +8,11 @@
 .view {
   margin-top: 80px;
   margin-bottom: 0;
+  margin-left: 2%;
+}
+
+.view-category label:not(:last-child) {
+  margin-right: 10px;
 }
 
 .pagination {

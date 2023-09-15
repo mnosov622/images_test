@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "../../components/Card/Card";
 import "./Home.css";
+import TreeView from "../../components/TreeView/TreeView";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -9,6 +10,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState("category");
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedView, setSelectedView] = useState("cards");
 
   const cardsPerPage = 20;
 
@@ -79,97 +81,131 @@ const Home = () => {
         </div>
       ) : (
         <>
-          <div className="sort">
-            <label>Sort by:</label>
-            <div className="sort-category">
+          <div className="view">
+            <label>View:</label>
+            <div className="view-category">
               <label>
                 <input
                   type="radio"
-                  name="sortBy"
-                  value="category"
-                  checked={sortBy === "category"}
-                  onChange={handleSortChange}
+                  name="viewBy"
+                  value="cards"
+                  checked={selectedView === "cards"}
+                  onChange={() => setSelectedView("cards")}
                 />
-                Category
+                Cards
               </label>
               <label>
                 <input
                   type="radio"
-                  name="sortBy"
-                  value="date"
-                  checked={sortBy === "date"}
-                  onChange={handleSortChange}
+                  name="viewBy"
+                  value="tree"
+                  checked={selectedView === "tree"}
+                  onChange={() => setSelectedView("tree")}
                 />
-                Date
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="sortBy"
-                  value="name"
-                  checked={sortBy === "name"}
-                  onChange={handleSortChange}
-                />
-                Name
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="sortBy"
-                  value="size"
-                  checked={sortBy === "size"}
-                  onChange={handleSortChange}
-                />
-                Size
+                Tree
               </label>
             </div>
           </div>
-          <button className="reset-button" onClick={resetCards}>
-            Reset Images
-          </button>
-          {sortBy === "category" ? (
-            <div className="categories">
-              <button onClick={() => handleCategoryClick(null)}>All</button>
-              {uniqueCategories.map((category, index) => (
-                <button key={index} onClick={() => handleCategoryClick(category)}>
-                  {category}
-                </button>
-              ))}
-            </div>
-          ) : sortBy === "date" ? (
-            // Render date-specific buttons here
-            <div className="date-filter">{/* Date filtering options */}</div>
-          ) : sortBy === "name" ? (
-            // Render name-specific buttons here
-            <div className="name-filter">{/* Name filtering options */}</div>
+          {selectedView === "tree" ? (
+            <TreeView data={sortedData} />
           ) : (
-            // Render size-specific buttons here
-            <div className="size-filter">{/* Size filtering options */}</div>
+            <>
+              <div className="sort">
+                <label>Sort by:</label>
+                <div className="sort-category">
+                  <label>
+                    <input
+                      type="radio"
+                      name="sortBy"
+                      value="category"
+                      checked={sortBy === "category"}
+                      onChange={handleSortChange}
+                    />
+                    Category
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="sortBy"
+                      value="date"
+                      checked={sortBy === "date"}
+                      onChange={handleSortChange}
+                    />
+                    Date
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="sortBy"
+                      value="name"
+                      checked={sortBy === "name"}
+                      onChange={handleSortChange}
+                    />
+                    Name
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="sortBy"
+                      value="size"
+                      checked={sortBy === "size"}
+                      onChange={handleSortChange}
+                    />
+                    Size
+                  </label>
+                </div>
+              </div>
+
+              <button className="reset-button" onClick={resetCards}>
+                Reset Images
+              </button>
+              {sortBy === "category" ? (
+                <div className="categories">
+                  <button onClick={() => handleCategoryClick(null)}>All</button>
+                  {uniqueCategories.map((category, index) => (
+                    <button key={index} onClick={() => handleCategoryClick(category)}>
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              ) : sortBy === "date" ? (
+                // Render date-specific buttons here
+                <div className="date-filter">{/* Date filtering options */}</div>
+              ) : sortBy === "name" ? (
+                // Render name-specific buttons here
+                <div className="name-filter">{/* Name filtering options */}</div>
+              ) : (
+                // Render size-specific buttons here
+                <div className="size-filter">{/* Size filtering options */}</div>
+              )}
+
+              <main className="main">
+                {currentCards.map((item, index) => (
+                  <Card
+                    id={index}
+                    key={index}
+                    item={item}
+                    onClose={() => handleCardClose(index)}
+                    isClosed={isCardClosed(item.id)}
+                  />
+                ))}
+              </main>
+
+              <div className="pagination">
+                <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
+                  Previous
+                </button>
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+                  disabled={currentCards.length < cardsPerPage}
+                >
+                  Next
+                </button>
+              </div>
+            </>
           )}
-          <main className="main">
-            {currentCards.map((item, index) => (
-              <Card
-                id={index}
-                key={index}
-                item={item}
-                onClose={() => handleCardClose(index)}
-                isClosed={isCardClosed(item.id)}
-              />
-            ))}
-          </main>
         </>
       )}
-      <div className="pagination">
-        <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
-          Previous
-        </button>
-        <button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={currentCards.length < cardsPerPage}
-        >
-          Next
-        </button>
-      </div>
     </>
   );
 };

@@ -5,7 +5,10 @@
   flex-wrap: wrap;
 }
 
-/* Add these styles to your Home.css or a separate CSS file */
+.view {
+  margin-top: 80px;
+  margin-bottom: 0;
+}
 
 .pagination {
   display: flex;
@@ -47,7 +50,6 @@
 }
 
 .sort {
-  margin-top: 80px;
   text-align: center;
 }
 

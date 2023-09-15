@@ -30,3 +30,15 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
+ul {
+  list-style: none;
+}
+
+li {
+  margin: 10px 0;
+}
+
+body.modal-open {
+  overflow: hidden;
+}

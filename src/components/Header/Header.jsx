@@ -2,7 +2,11 @@ import React from "react";
 import "./Header.css";
 
 const Header = () => {
-  return <header className="header">Header</header>;
+  return (
+    <header className="header">
+      <h1 className="header-title">Elecard</h1>
+    </header>
+  );
 };
 
 export default Header;

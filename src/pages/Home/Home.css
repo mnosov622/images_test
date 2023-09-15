@@ -1,6 +1,7 @@
 .main {
-  margin-top: 50px;
+  margin-top: 80px;
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -11,22 +12,6 @@
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 60px;
-}
-
-.pagination button {
-  padding: 10px 20px;
-  margin: 0 5px;
-  font-size: 16px;
-  background-color: #0074d9;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  border-radius: 8px;
-}
-
-.pagination button:hover {
-  background-color: #0056b3;
 }
 
 .pagination button:disabled {
@@ -62,5 +47,20 @@
 }
 
 .sort {
-  margin-top: 50px;
+  margin-top: 80px;
+  text-align: center;
+}
+
+.categories {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.reset-button {
+  float: right;
+  margin-top: 20px;
+}
+
+.sort-category label:not(:first-child) {
+  margin-left: 10px;
 }

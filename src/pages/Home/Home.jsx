@@ -12,6 +12,11 @@ const Home = () => {
 
   const cardsPerPage = 20;
 
+  const resetCards = () => {
+    localStorage.removeItem("closedCards");
+    window.location.reload();
+  };
+
   useEffect(() => {
     fetch("http://contest.elecard.ru/frontend_data/catalog.json")
       .then((response) => response.json())
@@ -76,7 +81,7 @@ const Home = () => {
         <>
           <div className="sort">
             <label>Sort by:</label>
-            <div>
+            <div className="sort-category">
               <label>
                 <input
                   type="radio"
@@ -119,6 +124,9 @@ const Home = () => {
               </label>
             </div>
           </div>
+          <button className="reset-button" onClick={resetCards}>
+            Reset Images
+          </button>
           {sortBy === "category" ? (
             <div className="categories">
               <button onClick={() => handleCategoryClick(null)}>All</button>
@@ -141,9 +149,10 @@ const Home = () => {
           <main className="main">
             {currentCards.map((item, index) => (
               <Card
+                id={index}
                 key={index}
                 item={item}
-                onClose={() => handleCardClose(item.id)}
+                onClose={() => handleCardClose(index)}
                 isClosed={isCardClosed(item.id)}
               />
             ))}

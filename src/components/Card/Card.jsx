@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Card.css";
 
-const Card = ({ item, onClose, isClosed }) => {
+const Card = React.memo(({ item, onClose, isClosed, id }) => {
+  const [cardClosed, setCardClosed] = useState(false);
+  const [closedCards, setClosedCards] = useState([]);
+
+  useEffect(() => {
+    if (localStorage.getItem("closedCards") !== null) {
+      const closedCards = JSON.parse(localStorage.getItem("closedCards"));
+      closedCards.forEach((cardId) => {
+        if (cardId === id) {
+          setCardClosed(true);
+        }
+      });
+    } else {
+      localStorage.setItem("closedCards", JSON.stringify([]));
+    }
+  }, [id]);
+
+  const handleRemoveImage = () => {
+    setCardClosed(true);
+    setClosedCards((prevClosedCards) => [...prevClosedCards, id]);
+    const closedCards = JSON.parse(localStorage.getItem("closedCards"));
+    if (closedCards || closedCards === null) {
+      localStorage.setItem("closedCards", JSON.stringify([...closedCards, id]));
+    }
+  };
+
   return (
-    <div className={`card ${isClosed ? "closed" : ""}`}>
-      <span className="close-button" onClick={onClose}>
+    <div className={`card ${cardClosed ? "closed" : ""}`}>
+      <span className="close-button" onClick={handleRemoveImage}>
         &#x2716;
       </span>
       <img
@@ -16,7 +41,7 @@ const Card = ({ item, onClose, isClosed }) => {
         <p>Category: {item.category}</p>
         <p>Filesize: {item.filesize} bytes</p>
         <p>
-          Timestamp:{" "}
+          Date:{" "}
           {new Date(item.timestamp).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
@@ -26,6 +51,6 @@ const Card = ({ item, onClose, isClosed }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Card;
